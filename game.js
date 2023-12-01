@@ -38,10 +38,6 @@ function playRound(){
         promptUser() ? playerScore++ : computerScore++;
     }
     (playerScore > computerScore) ? console.log(`You won! With a score of ${playerScore}`) : console.log(`You lose! Computer had score of ${computerScore}`);
-
-    console.log('Player Score: ' + playerScore);
-    console.log('Computer Score: ' + computerScore);
-
 }
 
 playRound();
