@@ -61,7 +61,7 @@ function playRounds(){
         }
 
         if(currentRound > NUM_OF_ROUNDS){
-            (playerScore > computerScore) ? output.textContent = `You won! With a score of ${playerScore}` : output.textContent = `You lose! Computer had score of ${computerScore}`;
+            (playerScore > computerScore) ? output.textContent = `GAME OVER! You won! With a score of ${playerScore}` : output.textContent = `GAME OVER! You lose! Computer had score of ${computerScore}`;
             options.removeEventListener('click', selector);
         }
 
