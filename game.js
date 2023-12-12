@@ -3,41 +3,89 @@ const getComputerChoice = () => {
     return choices[Math.floor(Math.random() * 3)];
 }
 
-const capitilise = string => {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
-function promptUser(){
-    let playerSelection = prompt('Rock, Paper or Scissors?');
+function promptUser(event){
+    let target = event.target;
+    let playerSelection = '';
+    switch(target.id){
+        case 'rock-btn':
+            playerSelection = 'Rock';
+            break;
+        case 'paper-btn':
+            playerSelection = 'Paper';
+            break;
+        case 'scissors-btn':
+            playerSelection = 'Scissors';
+            break;
+    }
     return singleRound(playerSelection, getComputerChoice());
 }
 
-const singleRound = (playerSelection, computerSelection) => {
-
-    playerSelection = capitilise(playerSelection);
+function singleRound(playerSelection, computerSelection){
 
     if (playerSelection === 'Rock' && computerSelection === 'Scissors' || playerSelection === 'Scissors' && computerSelection === 'Paper' || playerSelection === 'Paper' && computerSelection === 'Rock'){
-        console.log(`You win! ${playerSelection} beats ${computerSelection}`);
+        output.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
         return 1;
     }
     else if (playerSelection === computerSelection){
-        console.log('It is a tie!');
-        return promptUser(); //Recursion, prompts user again if a tie
+        output.textContent = 'It is a tie, try again!';
+        return 2;
     }
     else{
-        console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
-        return 0;
+        output.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+        return 3;
     }
 
 }
 
-function playRound(){
+function playRounds(){
     let playerScore = 0;
     let computerScore = 0;
-    for(let i=1; i<=5; i++){
-        promptUser() ? playerScore++ : computerScore++;
-    }
-    (playerScore > computerScore) ? console.log(`You won! With a score of ${playerScore}`) : console.log(`You lose! Computer had score of ${computerScore}`);
+    const NUM_OF_ROUNDS = 5;
+    let currentRound = 1;
+
+    let playerSelection;
+
+    options.addEventListener('click', function selector (event) {
+        playerSelection = promptUser(event);
+
+        if (playerSelection === 1){
+            playerScore++;
+            currentRound++;
+            playerScoreElement.textContent = `Player Score: ` + playerScore;
+        }
+        if(playerSelection === 3){
+            computerScore++;
+            currentRound++;
+            computerScoreElement.textContent = `Computer Score: ` + computerScore;
+
+        }
+
+        if(currentRound > NUM_OF_ROUNDS){
+            (playerScore > computerScore) ? output.textContent = `You won! With a score of ${playerScore}` : output.textContent = `You lose! Computer had score of ${computerScore}`;
+            options.removeEventListener('click', selector);
+        }
+
+    });
+
 }
 
-playRound();
+
+let options = document.querySelector('#options');
+let playerScoreElement = document.createElement('div');
+let computerScoreElement = document.createElement('div');
+playerScoreElement.textContent = `Player Score: ` + 0;
+computerScoreElement.textContent = `Computer Score: ` + 0;
+score.appendChild(playerScoreElement);
+score.appendChild(computerScoreElement);
+const output = document.createElement('div');
+options.appendChild(output);
+
+
+playRounds();
+
+
+
+
+
+
+
