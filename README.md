@@ -1,2 +1,2 @@
 # rock-paper-scissors
-This message is a test to ensure git is working properly
+This is my first javascript project learning to use event handlers and manipulting the DOM using select queries!
